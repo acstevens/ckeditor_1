@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>CKEditor+lite (disable)</title>
+				<script src="http://cdn.ckeditor.com/4.5.11/standard/ckeditor.js"></script>
+    </head>
+    <body>
+        <h2> Preloaded with text </h2>
+        <p> tracking is on by default </p>
+        <form>
+            <textarea name="editor1" id="editor1" rows="10" cols="80">
+                This is my textarea to be replaced with CKEditor.
+            </textarea>
+        </form>
+        <h2> Starting with no text </h2>
+        <p> tracking is <b>not</b> on by default </p>
+        <form>
+            <textarea name="editor2" id="editor1" rows="10" cols="80">
+            </textarea>
+        </form>
+
+    </body>
+		<script>
+        var CKEDITOR_BASEDIR = '/ckeditor_1/js/ckeditor';
+        CKEDITOR.plugins.addExternal( 'lite', CKEDITOR_BASEDIR+'/plugins/lite/', 'plugin.js' );
+
+				var editor1 = CKEDITOR.replace( 'editor1', {
+				    skin: 'office2013,'+CKEDITOR_BASEDIR+'/skins/office2013/',
+            customConfig: CKEDITOR_BASEDIR+'/config.js',
+				});
+        var editor2 = CKEDITOR.replace( 'editor2', {
+            skin: 'office2013,'+CKEDITOR_BASEDIR+'/skins/office2013/',
+            customConfig: CKEDITOR_BASEDIR+'/config.js',
+        });
+        editor2.on("customConfigLoaded", disableTracking);
+
+        function disableTracking(event) {
+          var conf = event.editor.config;
+          var lite = conf.lite;
+          lite.isTracking = false;
+        }
+		</script>
+</html>
